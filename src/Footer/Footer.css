@@ -1,0 +1,32 @@
+.footer{}
+
+.footer__inner{
+	display: flex;
+	gap: 20px;
+	padding: 20px 0;
+	border-top: 1px solid var(--light-divider-color);
+}
+
+.footer__text{
+	font-weight: 400;
+	font-size: 14px;
+	color: var(--light-gray-color);
+}
+
+.footer__link{
+	font-weight: 400;
+	font-size: 14px;
+	color: var(	--light-text-color);
+	display: flex;
+	gap: 9px;
+	align-items: center;
+}
+.footer__link::after{
+	content: '';
+	background-image: url(../assets/link_icon.svg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 12px;
+	height: 12px;
+	flex-shrink: 0;
+}

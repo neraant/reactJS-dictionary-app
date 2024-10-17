@@ -1,0 +1,37 @@
+:root{
+	--light-text-color: #2d2d2d;
+	--dark-text-color: #ffffff;
+	--light-gray-color: #757575;
+	--light-divider-color: #E9E9E9;
+	--dark-divider-color: #3a3a3a;
+	--purple-color: #a445ed;
+	--purple-with-opacity-color: hsla(274, 82%, 60%, 0.25);
+	--red-color: #ff5252;
+	--input-color: #f4f4f4;
+}
+
+/* body */
+body{
+	font-family: "Inter", sans-serif;
+	font-weight: 700;
+	background: #fff;
+  color: var(--light-text-color);
+}
+
+.body--sans-serif{
+	font-family: "Inter", sans-serif;
+}
+
+.body--serif{
+	font-family: "Lora", serif;
+}
+
+.body--mono{
+	font-family: "Inconsolata", monospace;
+}
+
+.container{
+  padding: 0px 10px;
+  max-width: 756px;
+  margin: 0 auto;
+}

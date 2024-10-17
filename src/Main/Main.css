@@ -1,0 +1,194 @@
+/* main */
+.main{}
+
+.word-defenition__wrapper{
+  padding-bottom: 40px;
+}
+
+.word-defenition__wrapper__inner{
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.input__wrapper{
+  position: relative;
+}
+.input__wrapper:hover .word-input{
+  outline: 1px solid var(--purple-color);
+}
+
+.word-input{
+  border: none;
+  outline: 1px solid transparent;
+
+  width: 100%;
+  padding: 20px 24px;
+  padding-right: 60px;
+  border-radius: 16px;
+  background: var(--input-color);
+
+  font-weight: 700;
+  font-size: 20px;
+
+  transition: all .4s;
+}
+.word-input:focus{
+  outline: 1px solid var(--purple-color);
+}
+.word-input:hover{
+  outline: 1px solid var(--purple-color);
+}
+
+.search-btn{
+  position: absolute;
+  top: 50%;
+  right: 24.5px;
+  transform: translateY(-50%);
+}
+
+.search-image{}
+
+.word-info__wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.word-info__text{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.word-info__title{
+  font-weight: 700;
+  font-size: 64px;
+
+}
+
+.word-info__transcription{
+  font-weight: 400;
+  font-size: 24px;
+  color: var(--purple-color);
+}
+
+.word-info__audio{}
+
+.play-btn{
+  position: relative;
+  display: block;
+  background: var(--purple-with-opacity-color);
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+
+  transition: all .3s;
+}
+.play-btn:hover{
+  background: var(--purple-color);
+}
+
+.play-btn::after{
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: calc(50% + 3px);
+  transform: translate(-50%, -50%);
+  border-top: 10px solid transparent;
+  border-bottom: 11px solid transparent;
+  border-left: 21px solid var(--purple-color);
+
+  transition: all .3s;
+}
+.play-btn:hover::after{
+  border-left: 21px solid #fff;
+}
+
+.additional__wrapper{
+}
+
+.medium__title{
+  font-weight: 700;
+  font-style: italic;
+  font-size: 24px;
+  margin-bottom: 40px;
+  
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+.medium__title::after{
+  content: '';
+  width: 100%;
+  height: 1px;
+  background: var(--light-divider-color);
+}
+
+.small__title{
+  font-weight: 400;
+  font-size: 20px;
+  color: var(--light-gray-color);
+}
+
+.list{
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  margin: 25px 0px 40px 22px;
+}
+.verb__wrapper .list{
+  margin-bottom: 13px;
+}
+
+.list__item{
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  display: flex;
+  gap: 25px;
+}
+.list__item::before{
+  content: '';
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--purple-color);
+  flex-shrink: 0;
+  margin-top: 10px;
+}
+
+.synonym__wrapper{
+  display: flex;
+  gap: 22px;
+}
+
+.synonym__text{
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--purple-color);
+  position: relative;
+}
+.synonym__text::after{
+  content: '';
+  width: 100%;
+  height: 1px;
+  background: var(--purple-color);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: none;
+}
+.synonym__text:hover::after{
+  display: block;
+}
+
+.verb-text{
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--light-gray-color);
+  padding-left: 52px;
+}
