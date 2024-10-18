@@ -1,6 +1,4 @@
 /* main */
-.main{}
-
 .word-defenition__wrapper{
   padding-bottom: 40px;
 }
@@ -16,6 +14,7 @@
 }
 .input__wrapper:hover .word-input{
   outline: 1px solid var(--purple-color);
+  transition: all .3s;
 }
 
 .word-input{
@@ -45,6 +44,25 @@
   top: 50%;
   right: 24.5px;
   transform: translateY(-50%);
+}
+
+.error-text{
+  position: absolute;
+  bottom: -25px;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+
+  color: var(--red-color);
+  font-size: 20px;
+  font-weight: 400;
+  margin-top: 8px;
+  transition: all .3s;
+}
+.error-text.visible{
+  bottom: -32px;
+  opacity: 1;
+  visibility: visible;
 }
 
 .search-image{}
@@ -106,9 +124,6 @@
   border-left: 21px solid #fff;
 }
 
-.additional__wrapper{
-}
-
 .medium__title{
   font-weight: 700;
   font-style: italic;
@@ -123,7 +138,8 @@
   content: '';
   width: 100%;
   height: 1px;
-  background: var(--light-divider-color);
+  background: var(--divider-color);
+  transition: all .3s;
 }
 
 .small__title{

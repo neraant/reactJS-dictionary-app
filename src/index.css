@@ -1,21 +1,39 @@
 :root{
-	--light-text-color: #2d2d2d;
-	--dark-text-color: #ffffff;
+	--text-color: #2d2d2d;
 	--light-gray-color: #757575;
-	--light-divider-color: #E9E9E9;
-	--dark-divider-color: #3a3a3a;
+	--divider-color: #E9E9E9;
 	--purple-color: #a445ed;
 	--purple-with-opacity-color: hsla(274, 82%, 60%, 0.25);
 	--red-color: #ff5252;
 	--input-color: #f4f4f4;
+	--main-bg: #fff;
+	--box-shadow-color: 0, 0, 0, 0.1;
+	--fonts-box-color: #fff;
+	color-scheme: light;
+}
+
+/* dark theme */
+.dark{
+	--text-color: #ffffff;
+	--light-gray-color: #757575;
+	--divider-color: #3a3a3a;
+	--purple-color: #a445ed;
+	--purple-with-opacity-color: hsla(274, 82%, 60%, 0.25);
+	--red-color: #ff5252;
+	--input-color: #1f1f1f;
+	--main-bg: #050505;
+	--box-shadow-color: 164, 69, 237;
+	--fonts-box-color: #1f1f1f;
+	color-scheme: dark;
 }
 
 /* body */
 body{
 	font-family: "Inter", sans-serif;
 	font-weight: 700;
-	background: #fff;
-  color: var(--light-text-color);
+	background: var(--main-bg);
+  color: var(--text-color);
+	transition: all .3s;
 }
 
 .body--sans-serif{

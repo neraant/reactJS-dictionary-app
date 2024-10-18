@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import searchIcon from '../assets/search_icon.svg';
 import './Main.css';
 
@@ -6,6 +6,8 @@ function Main(){
 	const [data, setData] = useState(null)
 	const [loading, setLoading] = useState(null)
 	const [error, setError] = useState(null)
+	const [emptyInput, setEmptyInput] = useState(false)
+	const audioRef = useRef(null)
 
 	const defaultNounDefenitions = [
 		"(etc.) A set of keys used to operate a typewriter, computer etc.",
@@ -16,10 +18,36 @@ function Main(){
 		"To type on a computer keyboard."
 	]
 
-	const handleInputClick = () => {
-		const inputValue = document.getElementById('wordInput').value;
+	const handlePlayAudio = () => {
+		if (audioRef.current) {
+			audioRef.current.play();
+		}
+	};
 
-		fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${inputValue}`)
+	const getAudioSrc = () => {
+    if (data && data[0]) {
+        const audioSource = data[0].phonetics.find(phonetic => phonetic.audio);
+        return audioSource ? audioSource.audio : "https://api.dictionaryapi.dev/media/pronunciations/en/keyboard-us.mp3";
+    }
+    return "https://api.dictionaryapi.dev/media/pronunciations/en/keyboard-us.mp3";
+};
+
+	const handleInputClick = () => {
+		const inputValue = document.getElementById('wordInput');
+
+		if(inputValue.value === '')
+		{
+			setEmptyInput(true)
+			inputValue.style.outline = '1px solid var(--red-color)';
+    	
+			return;
+		}
+		else{
+			setEmptyInput(false)
+			inputValue.style.outline = 'none';
+		}
+
+		fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${inputValue.value}`)
 		.then(response => {
 			if(!response.ok){
 				throw new Error('Network response was not ok')
@@ -55,7 +83,8 @@ function Main(){
 						<div className="word-defenition__wrapper__inner">
 							<div className="input__wrapper">
 								<input type="text" className="word-input" id="wordInput" />
-
+								<span className={`error-text ${emptyInput ? "visible" : ""}`}>Whoops, can’t be empty…</span>
+								
 								<button className="search-btn" onClick={handleInputClick}>
 									<img src={searchIcon} alt="search" className="search-image" />
 								</button>
@@ -73,7 +102,8 @@ function Main(){
 								</div>
 
 								<div className="word-info__audio">
-									<button className="play-btn"></button>
+										<audio ref={audioRef} src={getAudioSrc()} />
+										<button onClick={handlePlayAudio} className="play-btn"></button>
 								</div>
 							</div>
 
@@ -87,19 +117,16 @@ function Main(){
 								</h6>
 
 								<ul className="list noun-meaning-list">
-									{data == null ? defaultNounDefenitions.map((item, index) => {
-										return (
-											<li key={index} className='list__item'>
-												{item}
-											</li>
-										)
-									}) : data[0].meanings[0].definitions.map((item, index) => {
-										return (
-											<li key={index} className="list__item">
-												{item.definition}
-											</li>
-										)
-									})}
+										{data == null || !data[0].meanings[0]?.definitions ? 
+												defaultNounDefenitions.map((item, index) => (
+														<li key={index} className='list__item'>
+																{item}
+														</li>
+												)) : data[0].meanings[0].definitions.map((item, index) => (
+														<li key={index} className="list__item">
+																{item.definition}
+														</li>
+												))}
 								</ul>
 
 								<div className="synonym__wrapper">
@@ -108,7 +135,8 @@ function Main(){
 									</h6>
 
 									<p className="synonym__text">
-										{data == null ? "electronic keyboard" : data[0].meanings[0].synonyms[0]}
+											{data == null || !data[0].meanings[0]?.synonyms[0] ? 
+													"electronic keyboard" : data[0].meanings[0].synonyms[0]}
 									</p>
 								</div>
 							</div>
@@ -123,23 +151,21 @@ function Main(){
 								</h6>
 
 								<ul className="list verb-meaning-list">
-								{data == null ? defaultVerbDefenitions.map((item, index) => {
-										return (
-											<li key={index} className='list__item'>
-												{item}
-											</li>
-										)
-									}) : data[0].meanings[1].definitions.map((item, index) => {
-										return (
-											<li key={index} className="list__item">
-												{item.definition}
-											</li>
-										)
-									})}
+										{data == null || !data[0].meanings[1]?.definitions ? 
+												defaultVerbDefenitions.map((item, index) => (
+														<li key={index} className='list__item'>
+																{item}
+														</li>
+												)) : data[0].meanings[1].definitions.map((item, index) => (
+														<li key={index} className="list__item">
+																{item.definition}
+														</li>
+												))}
 								</ul>
 
 								<p className="verb-text">
-									{data == null ? null : data[0].meanings[1].definitions[0].example}
+										{data == null || !data[0].meanings[1]?.definitions[0] ? 
+												null : data[0].meanings[1].definitions[0].example}
 								</p>
 							</div>
 						</div>

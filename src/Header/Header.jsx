@@ -6,6 +6,7 @@ import './Header.css';
 function Header(){
 	const [fontWrapper, setFontWrapper] = useState(false)
 	const [font, setFont] = useState("Sans Serif")
+	const [isDarkMode, setIsDarkMode] = useState(false);
 
 	const toggleFontMenu = () => {
 		// Переключаем состояние при клике
@@ -18,6 +19,19 @@ function Header(){
 		setFont(selectedFont)
 		setFontWrapper(false)
 	}
+
+	const handleTheme = () => {
+    setIsDarkMode(prev => !prev);
+	};
+
+	useEffect(() => {
+		const root = document.querySelector(':root');
+    if (isDarkMode) {
+        root.classList.add('dark');
+    } else {
+        root.classList.remove('dark');
+    }
+	}, [isDarkMode])
 
 	useEffect(() => {
 		const handleClickOutside = (event) => {
@@ -74,8 +88,8 @@ function Header(){
 
 						<div className="vertical-divider"></div>
 
-						<div className="theme-switch__wrapper">
-							<label className="switch">
+						<div className="theme-switch__wrapper" >
+							<label className="switch" checked={isDarkMode} onChange={handleTheme}>
 								<input type="checkbox" />
 								<span className="slider round"></span>
 							</label>
