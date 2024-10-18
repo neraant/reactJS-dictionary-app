@@ -2,7 +2,7 @@ import './Footer.css';
 
 function Footer(){
 	return (
-		<footer>
+		<footer className='footer'>
 			<div className="container">
 				<div className="footer__inner">
 					<span className="footer__text">

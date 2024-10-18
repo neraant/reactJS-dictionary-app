@@ -167,3 +167,39 @@ input:checked + .slider:before {
   gap: 20px;
 }
 
+@media (max-width: 768px) {
+  .book-image{
+    max-width: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header{
+    padding: 24px 0;
+  }
+  .book-image{
+    max-width: 28px;
+  }
+  .change__select{
+      gap: 16px;
+      font-size: 14px;
+      line-height: 24px;
+  }
+  .change__options{
+    gap: 12px;
+    padding: 20px;
+  }
+  .change__option{
+    font-size: 14px;
+    line-height: 24px;
+  }
+  .active__wrapper{
+    gap: 16px;
+  }
+  .change__color-theme__image{
+    max-width: 20px;
+  }
+  .theme-switch__wrapper{
+    gap: 12px;
+  }
+}

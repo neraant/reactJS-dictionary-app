@@ -1,4 +1,6 @@
-.footer{}
+.footer{
+	margin-top: auto;
+}
 
 .footer__inner{
 	display: flex;
@@ -29,4 +31,19 @@
 	width: 12px;
 	height: 12px;
 	flex-shrink: 0;
+}
+
+@media (max-width: 480px){
+	.footer__inner{
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+	.footer__text{
+		width: 100%;
+		text-decoration: underline;
+		font-size: 14px;
+	}
+	.footer__link{
+		font-size: 14px;
+	}
 }

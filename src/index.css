@@ -33,7 +33,14 @@ body{
 	font-weight: 700;
 	background: var(--main-bg);
   color: var(--text-color);
+	min-height: 100vh;
 	transition: all .3s;
+}
+
+#root{
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 }
 
 .body--sans-serif{

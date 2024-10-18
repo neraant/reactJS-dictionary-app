@@ -1,10 +1,11 @@
 import { useRef, useState } from 'react';
 import searchIcon from '../assets/search_icon.svg';
+import emoji from './../assets/emoji_icon.png';
 import './Main.css';
 
 function Main(){
 	const [data, setData] = useState(null)
-	const [loading, setLoading] = useState(null)
+	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState(null)
 	const [emptyInput, setEmptyInput] = useState(false)
 	const audioRef = useRef(null)
@@ -50,31 +51,22 @@ function Main(){
 		fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${inputValue.value}`)
 		.then(response => {
 			if(!response.ok){
+				setLoading(true)
 				throw new Error('Network response was not ok')
 			}
+
+			setLoading(false)
 			return response.json()
 		})
 		.then(data => {
 			setData(data)
-			setLoading(false)
 		})
 		.catch(error => {
 			setError(error.message)
-			setLoading(false)
 		})
-	};
-	
-	// if (loading) return (
-	// 	<div className='container'>
-	// 		<p>Loading...</p>
-	// 	</div>
-	// );
 
-  // if (error) return (
-	// 	<div className='container'>
-	// 		<p>Error: {error}</p>
-	// 	</div>
-	// ) 
+		console.log(`loading: ${loading}`);
+	};
 
 	return (
 		<main className="main">
@@ -82,7 +74,7 @@ function Main(){
 					<div className="container">
 						<div className="word-defenition__wrapper__inner">
 							<div className="input__wrapper">
-								<input type="text" className="word-input" id="wordInput" />
+								<input type="text" className="word-input" id="wordInput" placeholder='Search for any word…' />
 								<span className={`error-text ${emptyInput ? "visible" : ""}`}>Whoops, can’t be empty…</span>
 								
 								<button className="search-btn" onClick={handleInputClick}>
@@ -90,88 +82,103 @@ function Main(){
 								</button>
 							</div>
 
-							<div className="word-info__wrapper">
-								<div className="word-info__text">
-									<h1 className="word-info__title">
-										{data == null ? "keyboard" : data[0].word}
-									</h1>
+							{loading ?
+								<div className='empty-state__wrapper'>
+									<img src={emoji} alt="emoji" className="empty-state__image" />
 
-									<h3 className="word-info__transcription">
-										{data == null ? "/ˈkiːbɔːd/" : data[0].phonetic}
-									</h3>
-								</div>
+									<h4 className="empty-state__title">
+										No Definitions Found
+									</h4>
 
-								<div className="word-info__audio">
-										<audio ref={audioRef} src={getAudioSrc()} />
-										<button onClick={handlePlayAudio} className="play-btn"></button>
-								</div>
-							</div>
-
-							<div className="noun__wrapper additional__wrapper">
-								<h4 className="noun__title medium__title">
-									noun
-								</h4>
-
-								<h6 className="small__title">
-									Meaning
-								</h6>
-
-								<ul className="list noun-meaning-list">
-										{data == null || !data[0].meanings[0]?.definitions ? 
-												defaultNounDefenitions.map((item, index) => (
-														<li key={index} className='list__item'>
-																{item}
-														</li>
-												)) : data[0].meanings[0].definitions.map((item, index) => (
-														<li key={index} className="list__item">
-																{item.definition}
-														</li>
-												))}
-								</ul>
-
-								<div className="synonym__wrapper">
-									<h6 className="small__title">
-										Synonyms
-									</h6>
-
-									<p className="synonym__text">
-											{data == null || !data[0].meanings[0]?.synonyms[0] ? 
-													"electronic keyboard" : data[0].meanings[0].synonyms[0]}
+									<p className="empty-state__text">
+										Sorry pal, we couldn't find definitions for the word you were looking for. You can try the search again at later time or head to the web instead.
 									</p>
-								</div>
-							</div>
+								</div> :
+								<>
+									<div className="word-info__wrapper">
+										<div className="word-info__text">
+											<h1 className="word-info__title">
+												{data == null ? "keyboard" : data[0].word}
+											</h1>
 
-							<div className="verb__wrapper additional__wrapper">
-								<h4 className="medium__title">
-									verb
-								</h4>
+											<h3 className="word-info__transcription">
+												{data == null ? "/ˈkiːbɔːd/" : data[0].phonetic}
+											</h3>
+										</div>
 
-								<h6 className="small__title">
-									Meaning
-								</h6>
+										<div className="word-info__audio">
+												<audio ref={audioRef} src={getAudioSrc()} />
+												<button onClick={handlePlayAudio} className="play-btn"></button>
+										</div>
+									</div>
 
-								<ul className="list verb-meaning-list">
-										{data == null || !data[0].meanings[1]?.definitions ? 
-												defaultVerbDefenitions.map((item, index) => (
-														<li key={index} className='list__item'>
-																{item}
-														</li>
-												)) : data[0].meanings[1].definitions.map((item, index) => (
-														<li key={index} className="list__item">
-																{item.definition}
-														</li>
-												))}
-								</ul>
+									<div className="noun__wrapper additional__wrapper">
+										<h4 className="noun__title medium__title">
+											noun
+										</h4>
 
-								<p className="verb-text">
-										{data == null || !data[0].meanings[1]?.definitions[0] ? 
-												null : data[0].meanings[1].definitions[0].example}
-								</p>
-							</div>
+										<h6 className="small__title">
+											Meaning
+										</h6>
+
+										<ul className="list noun-meaning-list">
+												{data == null || !data[0].meanings[0]?.definitions ? 
+														defaultNounDefenitions.map((item, index) => (
+																<li key={index} className='list__item'>
+																		{item}
+																</li>
+														)) : data[0].meanings[0].definitions.map((item, index) => (
+																<li key={index} className="list__item">
+																		{item.definition}
+																</li>
+														))}
+										</ul>
+
+										<div className="synonym__wrapper">
+											<h6 className="small__title">
+												Synonyms
+											</h6>
+
+											<p className="synonym__text">
+													{data == null || !data[0].meanings[0]?.synonyms[0] ? 
+															"electronic keyboard" : data[0].meanings[0].synonyms[0]}
+											</p>
+										</div>
+									</div>
+
+									<div className="verb__wrapper additional__wrapper">
+										<h4 className="medium__title">
+											verb
+										</h4>
+
+										<h6 className="small__title">
+											Meaning
+										</h6>
+
+										<ul className="list verb-meaning-list">
+												{data == null || !data[0].meanings[1]?.definitions ? 
+														defaultVerbDefenitions.map((item, index) => (
+																<li key={index} className='list__item'>
+																		{item}
+																</li>
+														)) : data[0].meanings[1].definitions.map((item, index) => (
+																<li key={index} className="list__item">
+																		{item.definition}
+																</li>
+														))}
+										</ul>
+
+										<p className="verb-text">
+												{data == null || !data[0].meanings[1]?.definitions[0] ? 
+														null : data[0].meanings[1].definitions[0].example}
+										</p>
+									</div>
+								</>
+							}
 						</div>
 					</div>
 				</section>
-			</main>
+		</main>
 	);
 }
 
